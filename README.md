@@ -21,6 +21,12 @@ A modern, dynamic web application to discover, search, and explore video games. 
 - **Icons**: Lucide React
 - **API**: [RAWG API](https://rawg.io/apidocs)
 
+## Screenshot
+
+![cann't loading!](public/screenshot.png)
+
+
+
 ## 🚀 Getting Started
 
 Follow these instructions to run the project locally on your machine.
