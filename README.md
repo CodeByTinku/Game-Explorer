@@ -22,7 +22,7 @@ A modern, dynamic web application to discover, search, and explore video games. 
 - **API**: [RAWG API](https://rawg.io/apidocs)
 
 ## 
-🚀 Demo You can try **Game-Explorer** live here: [![Deploy with Vercel](https://vercel.com/button)]()
+🚀 Demo You can try **Game-Explorer** live here: [![Deploy with Vercel](https://vercel.com/button)](https://game-explorer-pink.vercel.app/)
 ## Screenshot
 
 ![cann't loading!](public/screenshot.png)
