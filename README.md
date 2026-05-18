@@ -21,11 +21,11 @@ A modern, dynamic web application to discover, search, and explore video games. 
 - **Icons**: Lucide React
 - **API**: [RAWG API](https://rawg.io/apidocs)
 
+## 
+🚀 Demo You can try **Game-Explorer** live here: [![Deploy with Vercel](https://vercel.com/button)]()
 ## Screenshot
 
 ![cann't loading!](public/screenshot.png)
-
-
 
 ## 🚀 Getting Started
 
