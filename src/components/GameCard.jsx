@@ -1,8 +1,18 @@
 import { motion } from 'framer-motion';
-import { Star, Calendar, Monitor } from 'lucide-react';
+import { Star, Calendar, Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useWishlist } from '../hooks/useWishlist';
 
 const GameCard = ({ game }) => {
+  const { isInWishlist, toggleWishlist } = useWishlist();
+  const isSaved = isInWishlist(game.id);
+
+  const handleWishlistClick = (e) => {
+    e.preventDefault(); // Prevent navigating to GameDetails
+    e.stopPropagation();
+    toggleWishlist(game);
+  };
+
   return (
     <Link to={`/game/${game.id}`} className="block h-full">
       <motion.div
@@ -10,7 +20,7 @@ const GameCard = ({ game }) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
         whileHover={{ y: -10, scale: 1.02 }}
-        className="glass-card rounded-2xl overflow-hidden cursor-pointer flex flex-col h-full group"
+        className="glass-card rounded-2xl overflow-hidden cursor-pointer flex flex-col h-full group relative"
       >
         <div className="relative aspect-video overflow-hidden">
           <img
@@ -24,6 +34,15 @@ const GameCard = ({ game }) => {
               {game.metacritic}
             </div>
           )}
+          
+          <button
+            onClick={handleWishlistClick}
+            className="absolute top-4 left-4 p-2 bg-black/60 backdrop-blur-md rounded-full border border-gray-600 hover:bg-gray-800 transition-colors z-10"
+          >
+            <Heart 
+              className={`w-5 h-5 transition-colors ${isSaved ? 'text-pink-500 fill-pink-500' : 'text-gray-300 hover:text-pink-400'}`} 
+            />
+          </button>
         </div>
         
         <div className="p-5 flex flex-col flex-grow">

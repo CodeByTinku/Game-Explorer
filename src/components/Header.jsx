@@ -1,11 +1,13 @@
 import { useState } from 'react';
-import { Search, Gamepad2 } from 'lucide-react';
+import { Search, Gamepad2, Heart } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useWishlist } from '../hooks/useWishlist';
 
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
+  const { wishlist } = useWishlist();
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -22,18 +24,29 @@ const Header = () => {
           GameExplorer
         </Link>
         
-        <form onSubmit={handleSearch} className="w-full md:w-96 relative group">
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <Search className="h-5 w-5 text-gray-400 group-focus-within:text-blue-400 transition-colors" />
-          </div>
-          <input
-            type="text"
-            className="block w-full pl-10 pr-3 py-2 border border-gray-700 rounded-full leading-5 bg-gray-800/50 text-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition-all focus:bg-gray-800"
-            placeholder="Search for games..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </form>
+        <div className="flex w-full md:w-auto gap-4 items-center flex-1 md:justify-end">
+          <form onSubmit={handleSearch} className="w-full md:w-96 relative group">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <Search className="h-5 w-5 text-gray-400 group-focus-within:text-blue-400 transition-colors" />
+            </div>
+            <input
+              type="text"
+              className="block w-full pl-10 pr-3 py-2 border border-gray-700 rounded-full leading-5 bg-gray-800/50 text-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition-all focus:bg-gray-800"
+              placeholder="Search for games..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </form>
+
+          <Link to="/wishlist" className="relative p-2 text-gray-400 hover:text-pink-500 transition-colors group">
+            <Heart className="w-6 h-6 group-hover:fill-pink-500/20" />
+            {wishlist.length > 0 && (
+              <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-pink-500 rounded-full">
+                {wishlist.length}
+              </span>
+            )}
+          </Link>
+        </div>
       </div>
     </header>
   );

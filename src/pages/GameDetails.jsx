@@ -2,13 +2,16 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getGameDetails } from '../api/api';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Star, Calendar, Monitor, Globe, Code, Loader2 } from 'lucide-react';
+import { ArrowLeft, Star, Calendar, Monitor, Globe, Code, Loader2, Heart } from 'lucide-react';
+import { useWishlist } from '../hooks/useWishlist';
 
 const GameDetails = () => {
   const { id } = useParams();
   const [game, setGame] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  
+  const { isInWishlist, toggleWishlist } = useWishlist();
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -48,6 +51,8 @@ const GameDetails = () => {
     );
   }
 
+  const isSaved = isInWishlist(game.id);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -67,14 +72,31 @@ const GameDetails = () => {
           className="w-full h-full object-cover"
         />
         <div className="absolute bottom-0 left-0 p-6 md:p-10 z-20 w-full">
-          <motion.h1 
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            className="text-4xl md:text-6xl font-extrabold text-white mb-4 drop-shadow-lg"
-          >
-            {game.name}
-          </motion.h1>
-          <div className="flex flex-wrap items-center gap-4 text-sm md:text-base">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-4">
+            <motion.h1 
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              className="text-4xl md:text-6xl font-extrabold text-white drop-shadow-lg"
+            >
+              {game.name}
+            </motion.h1>
+            
+            <motion.button
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              onClick={() => toggleWishlist(game)}
+              className={`flex items-center gap-2 px-6 py-3 rounded-full font-bold transition-all shadow-lg backdrop-blur-md border ${
+                isSaved 
+                  ? 'bg-pink-500/20 text-pink-400 border-pink-500/50 hover:bg-pink-500/30' 
+                  : 'bg-black/40 text-white border-gray-600 hover:bg-black/60'
+              }`}
+            >
+              <Heart className={`w-5 h-5 ${isSaved ? 'fill-pink-400' : ''}`} />
+              {isSaved ? 'In Library' : 'Add to Library'}
+            </motion.button>
+          </div>
+          
+          <div className="flex flex-wrap items-center gap-4 text-sm md:text-base mt-4">
             {game.metacritic && (
               <span className="flex items-center gap-1 bg-green-500/20 text-green-400 px-3 py-1.5 rounded-full border border-green-500/30 font-bold">
                 <Star className="w-4 h-4 fill-green-400" /> {game.metacritic}
