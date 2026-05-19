@@ -13,6 +13,7 @@ const Header = () => {
     e.preventDefault();
     if (searchQuery.trim()) {
       navigate(`/?search=${encodeURIComponent(searchQuery)}`);
+      setSearchQuery(''); // Clear the search bar
     }
   };
 
