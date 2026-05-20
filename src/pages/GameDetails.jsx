@@ -60,12 +60,12 @@ const GameDetails = () => {
       exit={{ opacity: 0 }}
       className="space-y-8 pb-10"
     >
-      <Link to="/" className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
+      <Link to="/" className="inline-flex items-center gap-2 text-theme-secondary hover:text-theme-primary transition-colors">
         <ArrowLeft className="w-4 h-4" /> Back to Discover
       </Link>
 
       <div className="relative h-[40vh] md:h-[60vh] rounded-3xl overflow-hidden shadow-2xl">
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-[#0f172a]/60 to-transparent z-10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-theme-bg via-theme-bg/60 to-transparent z-10" />
         <img 
           src={game.background_image || 'https://via.placeholder.com/1920x1080?text=No+Image'} 
           alt={game.name}
@@ -76,7 +76,7 @@ const GameDetails = () => {
             <motion.h1 
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              className="text-4xl md:text-6xl font-extrabold text-white drop-shadow-lg"
+              className="text-4xl md:text-6xl font-extrabold text-theme-primary drop-shadow-lg"
             >
               {game.name}
             </motion.h1>
@@ -88,7 +88,7 @@ const GameDetails = () => {
               className={`flex items-center gap-2 px-6 py-3 rounded-full font-bold transition-all shadow-lg backdrop-blur-md border ${
                 isSaved 
                   ? 'bg-pink-500/20 text-pink-400 border-pink-500/50 hover:bg-pink-500/30' 
-                  : 'bg-black/40 text-white border-gray-600 hover:bg-black/60'
+                  : 'bg-theme-bg/40 text-theme-primary border-theme-border hover:bg-theme-bg/60'
               }`}
             >
               <Heart className={`w-5 h-5 ${isSaved ? 'fill-pink-400' : ''}`} />
@@ -102,11 +102,11 @@ const GameDetails = () => {
                 <Star className="w-4 h-4 fill-green-400" /> {game.metacritic}
               </span>
             )}
-            <span className="flex items-center gap-1 text-gray-300">
+            <span className="flex items-center gap-1 text-theme-primary/80">
               <Calendar className="w-4 h-4" /> {game.released || 'TBA'}
             </span>
             {game.playtime > 0 && (
-              <span className="flex items-center gap-1 text-gray-300">
+              <span className="flex items-center gap-1 text-theme-primary/80">
                 <Monitor className="w-4 h-4" /> {game.playtime} hrs avg
               </span>
             )}
@@ -117,8 +117,8 @@ const GameDetails = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div className="md:col-span-2 space-y-8">
           <section className="glass-card p-6 md:p-8 rounded-3xl">
-            <h2 className="text-2xl font-bold mb-4 text-white">About</h2>
-            <div className="prose prose-invert max-w-none text-gray-300 leading-relaxed space-y-4">
+            <h2 className="text-2xl font-bold mb-4 text-theme-primary">About</h2>
+            <div className="prose prose-invert max-w-none text-theme-primary/80 leading-relaxed space-y-4">
               {game.description_raw ? (
                  <p className="whitespace-pre-wrap">{game.description_raw}</p>
               ) : (
@@ -130,14 +130,14 @@ const GameDetails = () => {
 
         <div className="space-y-6">
           <section className="glass-card p-6 rounded-3xl">
-            <h3 className="text-xl font-bold mb-4 text-white">Details</h3>
+            <h3 className="text-xl font-bold mb-4 text-theme-primary">Details</h3>
             
             <div className="space-y-4">
               <div>
-                <h4 className="text-sm text-gray-500 uppercase font-semibold mb-1">Platforms</h4>
+                <h4 className="text-sm text-theme-secondary uppercase font-semibold mb-1">Platforms</h4>
                 <div className="flex flex-wrap gap-2">
                   {game.platforms?.map(({ platform }) => (
-                    <span key={platform.id} className="text-xs bg-gray-800 px-2.5 py-1 rounded-md text-gray-300">
+                    <span key={platform.id} className="text-xs bg-theme-bg px-2.5 py-1 rounded-md text-theme-primary/80">
                       {platform.name}
                     </span>
                   ))}
@@ -145,7 +145,7 @@ const GameDetails = () => {
               </div>
 
               <div>
-                <h4 className="text-sm text-gray-500 uppercase font-semibold mb-1">Genres</h4>
+                <h4 className="text-sm text-theme-secondary uppercase font-semibold mb-1">Genres</h4>
                 <div className="flex flex-wrap gap-2">
                   {game.genres?.map(genre => (
                     <span key={genre.id} className="text-xs bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2.5 py-1 rounded-md">
@@ -157,10 +157,10 @@ const GameDetails = () => {
 
               {game.developers?.length > 0 && (
                 <div>
-                  <h4 className="text-sm text-gray-500 uppercase font-semibold mb-1">Developers</h4>
+                  <h4 className="text-sm text-theme-secondary uppercase font-semibold mb-1">Developers</h4>
                   <div className="flex flex-wrap gap-2">
                     {game.developers?.map(dev => (
-                      <span key={dev.id} className="text-sm text-gray-300 flex items-center gap-1">
+                      <span key={dev.id} className="text-sm text-theme-primary/80 flex items-center gap-1">
                         <Code className="w-3 h-3" /> {dev.name}
                       </span>
                     ))}
@@ -174,7 +174,7 @@ const GameDetails = () => {
                 href={game.website}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-6 w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white py-3 rounded-xl font-medium transition-colors"
+                className="mt-6 w-full flex items-center justify-center gap-2 bg-accent hover:bg-accent-hover text-white py-3 rounded-xl font-medium transition-colors"
               >
                 <Globe className="w-4 h-4" /> Official Website
               </a>

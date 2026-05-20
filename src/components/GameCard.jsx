@@ -29,7 +29,7 @@ const GameCard = ({ game }) => {
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
           />
           {game.metacritic && (
-            <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-gray-600 flex items-center gap-1 font-bold text-green-400">
+            <div className="absolute top-4 right-4 bg-theme-bg/60 backdrop-blur-md px-3 py-1 rounded-full border border-theme-border flex items-center gap-1 font-bold text-green-400">
               <Star className="w-4 h-4 fill-green-400" />
               {game.metacritic}
             </div>
@@ -37,25 +37,25 @@ const GameCard = ({ game }) => {
           
           <button
             onClick={handleWishlistClick}
-            className="absolute top-4 left-4 p-2 bg-black/60 backdrop-blur-md rounded-full border border-gray-600 hover:bg-gray-800 transition-colors z-10"
+            className="absolute top-4 left-4 p-2 bg-theme-bg/60 backdrop-blur-md rounded-full border border-theme-border hover:bg-theme-hover transition-colors z-10"
           >
             <Heart 
-              className={`w-5 h-5 transition-colors ${isSaved ? 'text-pink-500 fill-pink-500' : 'text-gray-300 hover:text-pink-400'}`} 
+              className={`w-5 h-5 transition-colors ${isSaved ? 'text-pink-500 fill-pink-500' : 'text-theme-secondary hover:text-pink-400'}`} 
             />
           </button>
         </div>
         
         <div className="p-5 flex flex-col flex-grow">
-          <h3 className="text-xl font-bold mb-2 text-white line-clamp-1">{game.name}</h3>
+          <h3 className="text-xl font-bold mb-2 text-theme-primary line-clamp-1">{game.name}</h3>
           
-          <div className="flex items-center gap-2 text-gray-400 text-sm mb-4">
+          <div className="flex items-center gap-2 text-theme-secondary text-sm mb-4">
             <Calendar className="w-4 h-4" />
             <span>{game.released || 'TBA'}</span>
           </div>
           
-          <div className="mt-auto pt-4 border-t border-gray-700/50 flex flex-wrap gap-2">
+          <div className="mt-auto pt-4 border-t border-theme-border flex flex-wrap gap-2">
             {game.parent_platforms?.map(({ platform }) => (
-              <span key={platform.id} className="text-xs bg-gray-800/80 px-2 py-1 rounded-md text-gray-300">
+              <span key={platform.id} className="text-xs bg-theme-bg/80 px-2 py-1 rounded-md text-theme-primary/80">
                 {platform.name}
               </span>
             ))}

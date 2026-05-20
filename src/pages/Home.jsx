@@ -60,16 +60,16 @@ const Home = () => {
         animate={{ opacity: 1, y: 0 }}
         className="flex flex-col gap-2"
       >
-        <h1 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400">
+        <h1 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-theme-primary to-theme-secondary">
           {searchQuery ? `Search Results for "${searchQuery}"` : 'Trending Masterpieces'}
         </h1>
-        <p className="text-gray-400 text-lg">
+        <p className="text-theme-secondary text-lg">
           {searchQuery ? 'Explore games matching your search.' : 'Discover the highest-rated games of all time.'}
         </p>
       </motion.div>
 
       {games.length === 0 ? (
-        <div className="text-center text-gray-400 mt-20">
+        <div className="text-center text-theme-secondary mt-20">
           <p className="text-xl">No games found.</p>
         </div>
       ) : (

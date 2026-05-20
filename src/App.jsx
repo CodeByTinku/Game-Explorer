@@ -7,7 +7,7 @@ import Wishlist from './pages/Wishlist';
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-[#0f172a] text-white">
+      <div className="min-h-screen bg-theme-bg text-theme-primary transition-colors duration-300">
         <Header />
         <main className="max-w-7xl mx-auto px-4 py-8">
           <Routes>
