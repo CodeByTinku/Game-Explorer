@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { getGameDetails } from '../api/api';
+import { getGameDetails, getGameScreenshots, getGameTrailers } from '../api/api';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Star, Calendar, Monitor, Globe, Code, Loader2, Heart } from 'lucide-react';
 import { useWishlist } from '../hooks/useWishlist';
@@ -10,6 +10,9 @@ const GameDetails = () => {
   const [game, setGame] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [screenshots, setScreenshots] = useState([]);
+  const [trailers, setTrailers] = useState([]);
+  const [activeMedia, setActiveMedia] = useState(null); // For fullscreen view
   
   const { isInWishlist, toggleWishlist } = useWishlist();
 
@@ -18,8 +21,14 @@ const GameDetails = () => {
       setLoading(true);
       setError(null);
       try {
-        const data = await getGameDetails(id);
+        const [data, screenshotsData, trailersData] = await Promise.all([
+          getGameDetails(id),
+          getGameScreenshots(id).catch(() => ({ results: [] })),
+          getGameTrailers(id).catch(() => ({ results: [] }))
+        ]);
         setGame(data);
+        setScreenshots(screenshotsData.results || []);
+        setTrailers(trailersData.results || []);
       } catch (err) {
         setError('Failed to fetch game details.');
         console.error(err);
@@ -182,6 +191,80 @@ const GameDetails = () => {
           </section>
         </div>
       </div>
+
+      {/* Media Gallery Section */}
+      {(screenshots.length > 0 || trailers.length > 0) && (
+        <section className="glass-card p-6 md:p-8 rounded-3xl mt-8">
+          <h2 className="text-2xl font-bold mb-6 text-theme-primary">Media Gallery</h2>
+          
+          {trailers.length > 0 && (
+            <div className="mb-8">
+              <h3 className="text-lg font-semibold mb-4 text-theme-secondary">Trailers</h3>
+              <div className="flex overflow-x-auto gap-4 pb-4 snap-x snap-mandatory">
+                {trailers.map(trailer => (
+                  <div key={trailer.id} className="min-w-[85vw] md:min-w-[600px] snap-center shrink-0">
+                    <video 
+                      controls 
+                      poster={trailer.preview} 
+                      className="w-full rounded-2xl shadow-lg border border-theme-border/30"
+                    >
+                      <source src={trailer.data?.max || trailer.data?.['480']} type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {screenshots.length > 0 && (
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-theme-secondary">Screenshots</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                {screenshots.map(screenshot => (
+                  <motion.div 
+                    key={screenshot.id}
+                    whileHover={{ scale: 1.03 }}
+                    className="cursor-pointer rounded-xl overflow-hidden shadow-md border border-theme-border/30"
+                    onClick={() => setActiveMedia(screenshot.image)}
+                  >
+                    <img 
+                      src={screenshot.image} 
+                      alt="Gameplay screenshot" 
+                      className="w-full h-48 object-cover"
+                      loading="lazy"
+                    />
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          )}
+        </section>
+      )}
+
+      {/* Fullscreen Image Modal */}
+      {activeMedia && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm"
+          onClick={() => setActiveMedia(null)}
+        >
+          <motion.img 
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.9, opacity: 0 }}
+            src={activeMedia} 
+            alt="Fullscreen media" 
+            className="max-w-full max-h-[90vh] object-contain rounded-xl shadow-2xl"
+            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking image
+          />
+          <button 
+            className="absolute top-6 right-6 text-white bg-black/50 p-2 rounded-full hover:bg-black/80 transition-colors"
+            onClick={() => setActiveMedia(null)}
+          >
+            ✕
+          </button>
+        </div>
+      )}
     </motion.div>
   );
 };

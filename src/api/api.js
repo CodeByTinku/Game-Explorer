@@ -41,3 +41,13 @@ export const getGameDetails = async (id) => {
   const response = await api.get(`/games/${id}`);
   return response.data;
 };
+
+export const getGameScreenshots = async (id) => {
+  const response = await api.get(`/games/${id}/screenshots`);
+  return response.data;
+};
+
+export const getGameTrailers = async (id) => {
+  const response = await api.get(`/games/${id}/movies`);
+  return response.data;
+};
