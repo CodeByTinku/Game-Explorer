@@ -8,6 +8,8 @@ A modern, dynamic web application to discover, search, and explore video games. 
 - **Search Functionality**: Quickly find specific games using the search bar.
 - **My Library / Wishlist**: Save your favorite games locally to view them later in a dedicated library page.
 - **Detailed Information**: View comprehensive details for each game, including ratings, release dates, and platforms.
+- **Infinite Scroll**: Seamlessly browse through hundreds of games — new content loads automatically as you scroll down, no pagination buttons needed.
+- **Skeleton Loading**: Premium shimmer-effect placeholder cards appear while content loads, providing a smooth and polished loading experience.
 - **Premium UI/UX**: Enjoy a sleek, dark-themed design with smooth micro-interactions.
 - **Fluid Animations**: Seamless page transitions and interactive elements powered by Framer Motion.
 - **Responsive Design**: Fully optimized for mobile, tablet, and desktop devices.
