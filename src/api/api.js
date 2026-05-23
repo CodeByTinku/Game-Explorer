@@ -51,3 +51,28 @@ export const getGameTrailers = async (id) => {
   const response = await api.get(`/games/${id}/movies`);
   return response.data;
 };
+
+// Fetch games from the same series/franchise
+export const getGameSeries = async (id) => {
+  const response = await api.get(`/games/${id}/game-series`, {
+    params: { page_size: 8 },
+  });
+  return response.data;
+};
+
+// Fetch similar games based on genres (fallback)
+export const getSimilarGamesByGenre = async (genreSlugs, excludeId) => {
+  const response = await api.get('/games', {
+    params: {
+      genres: genreSlugs,
+      page_size: 8,
+      ordering: '-metacritic',
+      metacritic: '70,100',
+    },
+  });
+  // Filter out the current game from results
+  return {
+    ...response.data,
+    results: (response.data.results || []).filter((g) => g.id !== excludeId),
+  };
+};

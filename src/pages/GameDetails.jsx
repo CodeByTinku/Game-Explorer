@@ -4,6 +4,7 @@ import { getGameDetails, getGameScreenshots, getGameTrailers } from '../api/api'
 import { motion } from 'framer-motion';
 import { ArrowLeft, Star, Calendar, Monitor, Globe, Code, Loader2, Heart } from 'lucide-react';
 import { useWishlist } from '../hooks/useWishlist';
+import SimilarGames from '../components/SimilarGames';
 
 const GameDetails = () => {
   const { id } = useParams();
@@ -241,6 +242,9 @@ const GameDetails = () => {
           )}
         </section>
       )}
+
+      {/* Similar Games Section */}
+      <SimilarGames gameId={game.id} genres={game.genres} />
 
       {/* Fullscreen Image Modal */}
       {activeMedia && (
