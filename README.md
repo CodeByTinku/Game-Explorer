@@ -4,7 +4,7 @@ A modern, dynamic web application to discover, search, and explore video games. 
 
 ## ✨ Features
 
-- **Discover New Games**: Browse through popular and highly-rated games.
+- **Discover New Games**: Browse through popular and highly-rated games — the trending list shuffles on every visit, so you always discover something new.
 - **Search Functionality**: Quickly find specific games using the search bar.
 - **My Library / Wishlist**: Save your favorite games locally to view them later in a dedicated library page.
 - **Detailed Information**: View comprehensive details for each game, including ratings, release dates, and platforms.
