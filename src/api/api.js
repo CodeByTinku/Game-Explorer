@@ -34,6 +34,17 @@ export const getPopularGames = async (page = 1) => {
       metacritic: '80,100',
     },
   });
+
+  // Shuffle results on first page so games appear in random order each visit
+  if (page === 1 && response.data.results) {
+    const shuffled = [...response.data.results];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return { ...response.data, results: shuffled };
+  }
+
   return response.data;
 };
 
