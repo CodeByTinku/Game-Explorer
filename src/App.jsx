@@ -3,6 +3,7 @@ import Header from './components/Header';
 import Home from './pages/Home';
 import GameDetails from './pages/GameDetails';
 import Wishlist from './pages/Wishlist';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             <Route path="/wishlist" element={<Wishlist />} />
           </Routes>
         </main>
+        <ScrollToTop />
       </div>
     </Router>
   );
