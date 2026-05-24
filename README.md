@@ -11,6 +11,7 @@ A modern, dynamic web application to discover, search, and explore video games. 
 - **Similar Games**: Discover related games through a "You Might Also Like" carousel — automatically suggests games from the same series or genre.
 - **Infinite Scroll**: Seamlessly browse through hundreds of games — new content loads automatically as you scroll down, no pagination buttons needed.
 - **Skeleton Loading**: Premium shimmer-effect placeholder cards appear while content loads, providing a smooth and polished loading experience.
+- **Scroll to Top**: A sleek, animated button appears at the bottom-right corner as you scroll down — one click smoothly takes you back to the top.
 - **Premium UI/UX**: Enjoy a sleek, dark-themed design with smooth micro-interactions.
 - **Fluid Animations**: Seamless page transitions and interactive elements powered by Framer Motion.
 - **Responsive Design**: Fully optimized for mobile, tablet, and desktop devices.
