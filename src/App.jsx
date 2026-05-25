@@ -3,6 +3,7 @@ import Header from './components/Header';
 import Home from './pages/Home';
 import GameDetails from './pages/GameDetails';
 import Wishlist from './pages/Wishlist';
+import Quiz from './pages/Quiz';
 import ScrollToTop from './components/ScrollToTop';
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/game/:id" element={<GameDetails />} />
             <Route path="/wishlist" element={<Wishlist />} />
+            <Route path="/quiz" element={<Quiz />} />
           </Routes>
         </main>
         <ScrollToTop />

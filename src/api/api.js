@@ -87,3 +87,16 @@ export const getSimilarGamesByGenre = async (genreSlugs, excludeId) => {
     results: (response.data.results || []).filter((g) => g.id !== excludeId),
   };
 };
+
+// Fetch highly recognizable games for the trivia quiz (sorted by popularity/added count)
+export const getQuizGames = async () => {
+  const response = await api.get('/games', {
+    params: {
+      page: 1,
+      page_size: 60,
+      ordering: '-added',
+    },
+  });
+  return response.data;
+};
+
