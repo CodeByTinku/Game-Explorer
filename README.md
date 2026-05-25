@@ -36,7 +36,7 @@ A modern, dynamic web application to discover, search, and explore video games. 
 🚀 Demo You can try **Game-Explorer** live here: [![Deploy with Vercel](https://vercel.com/button)](https://game-explorer-pink.vercel.app/)
 ## Screenshot
 
-![cann't loading!](public/screenshot.png)
+![cann't loading!](public/screenshot2.png)
 
 ## 🚀 Getting Started
 
