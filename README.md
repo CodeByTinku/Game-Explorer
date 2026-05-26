@@ -11,7 +11,11 @@ A modern, dynamic web application to discover, search, and explore video games. 
   - **Streak Multiplier 🔥**: Maintain consecutive correct answers to multiply score earnings.
   - **Dynamic Clues 🔍**: Guess from blurred gameplay screenshots (can be de-blurred with a 3-second penalty), release years, metacritic scores, genres, and platform tags.
   - **High Score Record 👑**: Keeps track of your personal high score locally using LocalStorage.
-- **Search Functionality**: Quickly find specific games using the search bar.
+- **Smart Search Recommendations & Autocomplete 🔍**: A live interactive suggestion dropdown as you type.
+  - **"Trending Right Now" on Focus**: Focus the search bar to immediately see a list of top 5 trending games before you even start typing.
+  - **Rich Recommendation Cards**: Each suggestion card displays a rounded high-quality thumbnail, release year, metacritic rating badge, and supported platforms.
+  - **Optimized Debouncing**: High-performance search queries with a 250ms debouncing duration to prevent excessive API requests.
+  - **Keyboard Navigation Support ⌨️**: Fully accessible autocomplete menu navigable via keyboard using `ArrowUp`, `ArrowDown`, `Enter` to select/navigate, and `Escape` to dismiss.
 - **My Library / Wishlist**: Save your favorite games locally to view them later in a dedicated library page.
 - **Detailed Information**: View comprehensive details for each game, including ratings, release dates, and platforms.
 - **Similar Games**: Discover related games through a "You Might Also Like" carousel — automatically suggests games from the same series or genre.
