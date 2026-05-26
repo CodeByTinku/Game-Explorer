@@ -1,20 +1,82 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Search, Gamepad2, Heart, Trophy } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import { useWishlist } from '../hooks/useWishlist';
 import ThemeToggle from './ThemeToggle';
+import { useSearchSuggestions } from '../hooks/useSearchSuggestions';
+import SearchSuggestions from './SearchSuggestions';
 
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
+  
   const navigate = useNavigate();
   const { wishlist } = useWishlist();
+  const searchContainerRef = useRef(null);
 
-  const handleSearch = (e) => {
+  // Hook to get search match results & trending recommendation list
+  const { searchResults, popularResults, loading, isSearching } = useSearchSuggestions(searchQuery);
+
+  const currentSuggestions = isSearching ? searchResults : popularResults;
+
+  // Reset selected list index whenever query changes
+  useEffect(() => {
+    setSelectedIndex(-1);
+  }, [searchQuery]);
+
+  // Click outside detection to close suggestions dropdown
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  // Keyboard navigation control
+  const handleKeyDown = (e) => {
+    if (!isOpen) return;
+    
+    const totalItems = currentSuggestions.length;
+    if (totalItems === 0) return;
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault(); // Prevent cursor movement
+      setSelectedIndex((prev) => (prev + 1) % totalItems);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault(); // Prevent cursor movement
+      setSelectedIndex((prev) => (prev - 1 + totalItems) % totalItems);
+    } else if (e.key === 'Escape') {
+      setIsOpen(false);
+      e.target.blur();
+    } else if (e.key === 'Enter') {
+      if (selectedIndex >= 0 && selectedIndex < totalItems) {
+        e.preventDefault();
+        const selectedGame = currentSuggestions[selectedIndex];
+        handleSelectGame(selectedGame);
+      }
+    }
+  };
+
+  const handleSelectGame = (game) => {
+    navigate(`/game/${game.id}`);
+    setSearchQuery('');
+    setIsOpen(false);
+    setSelectedIndex(-1);
+  };
+
+  const handleSearchSubmit = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
       navigate(`/?search=${encodeURIComponent(searchQuery)}`);
       setSearchQuery(''); // Clear the search bar
+      setIsOpen(false);
+      setSelectedIndex(-1);
     }
   };
 
@@ -27,18 +89,36 @@ const Header = () => {
         </Link>
         
         <div className="flex w-full md:w-auto gap-4 items-center flex-1 md:justify-end">
-          <form onSubmit={handleSearch} className="w-full md:w-96 relative group">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Search className="h-5 w-5 text-theme-secondary group-focus-within:text-accent transition-colors" />
-            </div>
-            <input
-              type="text"
-              className="block w-full pl-10 pr-3 py-2 border border-theme-border rounded-full leading-5 bg-theme-card text-theme-primary placeholder-theme-secondary focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent sm:text-sm transition-all focus:bg-theme-hover"
-              placeholder="Search for games..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+          {/* Search container with click outside ref */}
+          <div ref={searchContainerRef} className="w-full md:w-96 relative">
+            <form onSubmit={handleSearchSubmit} className="w-full relative group">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Search className="h-5 w-5 text-theme-secondary group-focus-within:text-accent transition-colors" />
+              </div>
+              <input
+                type="text"
+                className="block w-full pl-10 pr-3 py-2 border border-theme-border rounded-full leading-5 bg-theme-card text-theme-primary placeholder-theme-secondary focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent sm:text-sm transition-all focus:bg-theme-hover"
+                placeholder="Search for games..."
+                value={searchQuery}
+                onFocus={() => setIsOpen(true)}
+                onKeyDown={handleKeyDown}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  setIsOpen(true);
+                }}
+              />
+            </form>
+
+            {/* Smart autocomplete suggestions dropdown overlay */}
+            <SearchSuggestions
+              results={currentSuggestions}
+              selectedIndex={selectedIndex}
+              onSelect={handleSelectGame}
+              loading={loading}
+              isSearching={isSearching}
+              isOpen={isOpen}
             />
-          </form>
+          </div>
 
           <ThemeToggle />
 
